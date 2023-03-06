@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "66a9a2f1-fb46-44d4-9794-31a3a1ef4ebb",
+		"_postman_id": "b6f6f4cf-2575-4d3f-aeff-98a961fa047b",
 		"name": "basic-books-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,7 +9,38 @@
 			"name": "GET - /books",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - /books/:id - NOT FOUND",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/books/badisbn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books",
+						"badisbn"
+					]
+				}
 			},
 			"response": []
 		},
@@ -82,6 +113,26 @@
 			"response": []
 		},
 		{
+			"name": "DELETE - /books/:id NOT FOUND",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/books/978-0544003415",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books",
+						"978-0544003415"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "PUT - /books/:id",
 			"request": {
 				"method": "PUT",
@@ -105,6 +156,35 @@
 					"path": [
 						"books",
 						"978-0544003419"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT - /books/:id NOT FOUND",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"title\": \"~ The Hobbit ~\",\n        \"author\": \"J.R.R. Tolkien\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/books/badisbn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books",
+						"badisbn"
 					]
 				}
 			},

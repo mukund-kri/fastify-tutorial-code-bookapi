@@ -22,11 +22,16 @@ export default async function (fastify, opts) {
         return books
     })
 
-
     // Book details, get by isbn
     fastify.get(`${BOOKS_ROOT}/:isbn`, async function (request, reply) {
         const isbn = request.params.isbn
         const book = books.find(book => book.isbn == isbn)
+
+        // If the book is not found, return a 404 error
+        if (book === undefined) {
+            reply.code(404).send({ message: 'Book not found' })
+            return
+        }
         return book
     })
 
@@ -40,6 +45,16 @@ export default async function (fastify, opts) {
     // Update a book
     fastify.put(`${BOOKS_ROOT}/:isbn`, async function (request, reply) {
         const isbn = request.params.isbn
+
+        // First check if the book exists, if not return a 404 error
+        const book = books.find(book => book.isbn == isbn)
+        console.log(book)
+        if (!book) {
+            reply.code(404).send({ message: 'Book not found' })
+            return
+        }
+
+        // Update the book
         const updatedBook = {
             isbn,
             ...request.body
@@ -51,6 +66,16 @@ export default async function (fastify, opts) {
     // Delete a book
     fastify.delete(`${BOOKS_ROOT}/:isbn`, async function (request, reply) {
         const isbn = request.params.isbn
+
+        // Check if the book exists, if not return a 404 error
+        const book = books.find(book => book.isbn == isbn)
+        console.log(book)
+        if (book === undefined) {
+            reply.code(404).send({ message: 'Book not found' })
+            return
+        }
+
+        // if the book exists, delete it
         books = books.filter(book => book.isbn != isbn)
         return { message: 'Book deleted' }
     })
