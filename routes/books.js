@@ -44,7 +44,7 @@ export default async function (fastify, opts) {
             isbn,
             ...request.body
         }
-        books = books.map(book => book.isbn == isbn ? book : updatedBook)
+        books = books.map(book => book.isbn == isbn ? updatedBook : book)
         return updatedBook
     })
 
