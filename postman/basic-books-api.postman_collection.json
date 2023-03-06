@@ -65,6 +65,26 @@
 			"response": []
 		},
 		{
+			"name": "GET - /books/:id ISBN TO SHORT",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/books/978-0544003415",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books",
+						"978-0544003415"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "POST - /books",
 			"request": {
 				"method": "POST",
@@ -72,6 +92,34 @@
 				"body": {
 					"mode": "raw",
 					"raw": "    {\n        \"isbn\": \"978-0553384611\",\n        \"title\": \"A Game of Thrones\",\n        \"author\": \"George R.R. Martin\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - /books - INVALID BOOK",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"isbn\": \"978-0553\",\n        \"author\": \"Ge\"\n    }",
 					"options": {
 						"raw": {
 							"language": "json"

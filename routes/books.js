@@ -13,17 +13,95 @@ let books = [
         "title": "The Hobbit",
         "author": "J.R.R. Tolkien"
     },
-
 ]
+
+// Define the schema for the books listing
+
+// JSON Schema for an individual book
+const BookSchema = {
+    type: 'object',
+    required: ['isbn', 'title', 'author'],
+    properties: {
+        isbn: { type: 'string', minLength: 10, maxLength: 14 },
+        title: { type: 'string', minLength: 3, },
+        author: { type: 'string', minLength: 3 }
+    }
+}
+
+// JSON Schema for the array of books
+const BooksSchema = {
+    type: 'array',
+    items: BookSchema
+}
+
+// Common JSON Schema for url with the isbn parameter. Used in GET, PUT and DELETE
+const IsbnSchema = {
+    type: 'object',
+    properties: {
+        isbn: { type: 'string', minLength: 10, maxLength: 14 }
+    }
+}
+
+// Validation schema for the books listing
+const allBooksSchema = {
+    schema: {
+        response: {
+            200: BooksSchema
+        }
+    }
+}
+
+// Validation schema for the book details, get by isbn
+const bookByIsbnSchema = {
+    schema: {
+        params: IsbnSchema,
+        response: {
+            '2xx': BookSchema
+        }
+    }
+}
+
+// Validation for adding a new book. 
+// This is more complex. The incoming data must be a valid book object,
+// and the same book is then returned.
+const addBookSchema = {
+    schema: {
+        body: BookSchema,  // incoming data
+        response: {
+            '200': BookSchema  // outgoing data on success
+        }
+    }
+}
+
+// Validation for updating a book.
+const updateBookSchema = {
+    schema: {
+        params: IsbnSchema,
+        body: BookSchema,
+        response: {
+            '200': BookSchema
+        }
+    }
+}
+
+// Validation for deleting a book
+const deleteBookSchema = {
+    schema: {
+        params: IsbnSchema,
+        response: {
+            '200': { type: 'object', properties: { message: { type: 'string' } } }
+        }
+    }
+}
 
 export default async function (fastify, opts) {
     // Books listing
-    fastify.get(`${BOOKS_ROOT}`, async function (request, reply) {
+    fastify.get(`${BOOKS_ROOT}`, allBooksSchema, async function (request, reply) {
         return books
     })
 
     // Book details, get by isbn
-    fastify.get(`${BOOKS_ROOT}/:isbn`, async function (request, reply) {
+    fastify.get(`${BOOKS_ROOT}/:isbn`, bookByIsbnSchema, async function (request, reply) {
         const isbn = request.params.isbn
         const book = books.find(book => book.isbn == isbn)
 
@@ -36,7 +114,7 @@ export default async function (fastify, opts) {
     })
 
     // Add a new book
-    fastify.post(`${BOOKS_ROOT}`, async function (request, reply) {
+    fastify.post(`${BOOKS_ROOT}`, addBookSchema, async function (request, reply) {
         const book = request.body
         books.push(book)
         return book
