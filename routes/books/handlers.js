@@ -34,20 +34,17 @@ export async function addBook(request, reply) {
 export async function updateBook(request, reply) {
     const isbn = request.params.isbn
 
-    // First check if the book exists, if not return a 404 error
-    const book = books.find(book => book.isbn == isbn)
+    // Update the book with sequelize
+    const result = await db.Book.update(request.body, { where: { isbn: isbn } })
 
-    if (book === undefined) {
+    // If the book is not found, return a 404 error
+    if (result[0] === 0) {
         reply.code(404).send({ message: 'Book not found' })
         return
     }
 
-    // Update the book
-    const updatedBook = {
-        isbn,
-        ...request.body
-    }
-    books = books.map(book => book.isbn == isbn ? updatedBook : book)
+    // Return the updated book
+    const updatedBook = await db.Book.findOne({ where: { isbn: isbn } })
     return updatedBook
 }
 
@@ -55,21 +52,16 @@ export async function updateBook(request, reply) {
 export async function deleteBook(request, reply) {
     const isbn = request.params.isbn
 
-    // Check if the book exists, if not return a 404 error
-    const book = books.find(book => book.isbn == isbn)
-    if (book === undefined) {
+    // Delete the book with sequelize
+    const result = await db.Book.destroy({ where: { isbn: isbn } })
+
+    // If the book is not found, return a 404 error
+    if (result === 0) {
         reply.code(404).send({ message: 'Book not found' })
         return
     }
 
-    // if the book exists, delete it
-    books = books.filter(book => book.isbn != isbn)
+    // Return a success message
     return { message: 'Book deleted' }
 }
 
-// Path: routes/books/index.js:
-export default function dontKnowWhat(request, reply) {
-    let x = 1;
-
-    console.log(x);
-}
