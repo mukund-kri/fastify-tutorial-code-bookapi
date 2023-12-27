@@ -68,7 +68,8 @@ export const updateBookSchema = {
     params: {
         type: 'object',
         properties: {
-            isbn: { type: 'string' },
+            isbn: { type: 'string', nullable: true },
+            author: { type: 'string', nullable: true },
         },
     },
     body: {

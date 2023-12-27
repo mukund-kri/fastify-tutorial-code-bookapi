@@ -21,8 +21,8 @@ export async function getBookByISBN(request, reply) {
 
 // POST /books
 export async function addBook(request, reply) {
-    const { isbn, title } = request.body
-    const book = { isbn, title }
+    const { isbn, title, author } = request.body
+    const book = { isbn, title, author }
     books.push(book)
     reply.code(201).send(book)
 }
@@ -30,13 +30,16 @@ export async function addBook(request, reply) {
 // PUT /books/:isbn
 export async function updateBook(request, reply) {
     const { isbn } = request.params
-    const { title } = request.body
+    const { title, author } = request.body
     const book = books.find(book => book.isbn === isbn)
     if (!book) {
         reply.code(404).send({ error: 'Book not found' })
         return
     }
-    book.title = title
+
+    // if title or author is provided, update the book
+    if (title) book.title = title
+    if (author) book.author = author
     reply.send(book)
 }
 
