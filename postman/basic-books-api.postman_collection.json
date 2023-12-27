@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b6f6f4cf-2575-4d3f-aeff-98a961fa047b",
+		"_postman_id": "0c9d4dfd-4981-4070-9762-5eed14eaf5f4",
 		"name": "basic-books-api",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3119010"
 	},
 	"item": [
 		{
@@ -146,7 +147,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/books/978-0544003415",
+					"raw": "http://localhost:3000/books/978-0553384611",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -154,7 +155,7 @@
 					"port": "3000",
 					"path": [
 						"books",
-						"978-0544003415"
+						"978-0553384611"
 					]
 				}
 			},
@@ -195,7 +196,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/books/978-0544003419",
+					"raw": "http://localhost:3000/books/9781491904244",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -203,7 +204,7 @@
 					"port": "3000",
 					"path": [
 						"books",
-						"978-0544003419"
+						"9781491904244"
 					]
 				}
 			},
