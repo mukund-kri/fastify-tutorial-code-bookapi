@@ -1,4 +1,4 @@
-import books from './db.js'
+import books from '../../db/db_array.js'
 import {
     allBooksSchema,
     bookByIsbnSchema,
