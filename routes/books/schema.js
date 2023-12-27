@@ -6,6 +6,7 @@ export const bookSchema = {
     properties: {
         isbn: { type: 'string' },
         title: { type: 'string' },
+        author: { type: 'string', nullable: true },
     },
 }
 
