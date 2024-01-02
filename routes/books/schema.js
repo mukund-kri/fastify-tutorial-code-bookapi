@@ -30,13 +30,17 @@ export const bookByIsbnSchema = {
     params: {
         type: 'object',
         properties: {
-            isbn: { type: 'string' },
+            isbn: { type: 'string', pattern: '^[0-9]{10}$' },
         },
     },
     response: {
         200: {
             description: 'Successful response',
             ...bookSchema,
+        },
+        400: {
+            error: 'Bad Request',
+            message: 'Invalid ISBN. Your ISBN should be a 10 digit number',
         },
     },
 }
