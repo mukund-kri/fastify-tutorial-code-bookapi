@@ -4,10 +4,11 @@
 export const bookSchema = {
     type: 'object',
     properties: {
-        isbn: { type: 'string' },
-        title: { type: 'string' },
+        isbn: { type: 'string', pattern: '^[0-9]{13}$' },
+        title: { type: 'string', minLength: 5, maxLength: 255 },
         author: { type: 'string', nullable: true },
     },
+    required: ["isbn", "title"],
 }
 
 // GET /books
@@ -30,18 +31,15 @@ export const bookByIsbnSchema = {
     params: {
         type: 'object',
         properties: {
-            isbn: { type: 'string', pattern: '^[0-9]{10}$' },
+            isbn: { type: 'string', pattern: '^[0-9]{13}$' },
         },
     },
     response: {
         200: {
-            description: 'Successful response',
+            description: 'Successful response', 
             ...bookSchema,
         },
-        400: {
-            error: 'Bad Request',
-            message: 'Invalid ISBN. Your ISBN should be a 10 digit number',
-        },
+
     },
 }
 
@@ -49,14 +47,7 @@ export const bookByIsbnSchema = {
 export const addBookSchema = {
     description: 'Add a new book',
     tags: ['books'],
-    body: {
-        type: 'object',
-        properties: {
-            isbn: { type: 'string' },
-            title: { type: 'string' },
-        },
-        required: ['isbn', 'title'],
-    },
+    body: bookSchema,
     response: {
         201: {
             description: 'Successful response',
